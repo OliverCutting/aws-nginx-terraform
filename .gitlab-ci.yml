@@ -1,8 +1,8 @@
 stages:
-  - kics
+  - test
 
 kics-scan:
-  stage: kics
+  stage: test
   image: 
     name: checkmarx/kics:latest
     entrypoint: [""]
