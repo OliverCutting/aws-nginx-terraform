@@ -1,8 +1,27 @@
+---
+default:
+  image: registry.gitlab.com/oliver.cutting/deploy-app-to-aws:latest
+
 stages:
   - test
 
+yamllint:
+  stage: test
+  allow_failure: true
+  script:
+    - yamllint .
+
+terraform-lint:
+  stage: test
+  allow_failure: true
+  script:
+    - terraform init
+    - terraform fmt -diff -recursive -check || (terraform fmt -recursive && exit 1)
+    - terraform validate
+
 kics-scan:
   stage: test
+  allow_failure: true
   image: 
     name: checkmarx/kics:latest
     entrypoint: [""]
